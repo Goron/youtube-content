@@ -1,0 +1,118 @@
+Host header injection
+
+host
+Host: 
+
+why?
+
+http/1.1
+
+
+server - IP address
+multiple websites
+	facebook
+	instagram
+
+apache
+	virtual hosts
+
+	ip - facebook,insta
+
+Host: 
+facebook.com
+
+Host: instagram.com
+
+
+
+internet -----> proxy/ids -->server,server2,server3		host: facebook.com			
+
+
+
+
+
+
+
+
+php django
+;laravel
+
+facebokk.com/index.php
+
+<html>
+<script src=$_SERVER['HTP-HOST']/script.js'
+<css src='facebook.com/css.js'/>
+
+
+password reset
+
+
+function passreset()
+emailheader="hi dear user"
+link = http:// $_SERVEr['HTTP_HOST']/reset?token=md5(asjdhkasjhd) 
+
+
+.env
+
+
+
+allowed-hosts=['facebook.com',instagra]
+
+
+- web cache
+- bussinoss
+- ssrf
+- sql injection
+
+
+
+- absolute urls host: allowed
+validation 
+- x-forwaded-host
+x-host
+x0forward
+
+chosts
+vhosts
+
+internal only accisible
+whitelisting
+
+
+test cases
+
+
+host: evil.com
+
+host: subdomain.facebook.com
+
+
+host: fb.com
+host: evil.com
+
+
+ host: fb.com
+host: evil.com
+
+override
+x-forwarded-server
+forwarded
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
