@@ -1,0 +1,119 @@
+================================
+CRLF Injection
+==================================
+
+
+CRLF - CR carriage return
+	   LF - Fine feed
+	   
+c,java
+	strings = "cyber blackhole\0"
+	file = "EOF"
+
+\r\n -> 0d0a (13,10)
+	
+WEB SERVERS
+REQUEST								RESPONSE
+
+client --------------------------> 
+GET / HTTP/1.1\r\n 					1
+Host: exmaple.com\r\n				2.
+alskd: askjdhk
+ajkshd: asjdjk
+
+
+
+
+
+
+
+
+
+
+
+HTTP 302
+Set-Cookie: username=cyber
+Username: cyber
+<script>alert(1)</script>
+Content-Type: text/html
+
+<html>
+
+..
+.
+.
+.
+
+
+Exploitation methods:
+1. custom headers
+2. sesion hijacking
+
+
+
+
+
+
+
+
+Mitigation:
+Sanitisation
+encode
+headers
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GET /username=&password=%0d%0a HTTP/1.1 \r\n
+
+
+
+
+
+
+
+
+
