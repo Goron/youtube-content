@@ -1,0 +1,95 @@
+Hardware + os
+Hardware support to os
+Bios, bootloader, ram, peripherals
+uefi
+
+
+Device inspection
+Problem
+ - undetected by os not plugin or detected
+ - detected but didn't work
+
+
+Hardware Component -> kernel module ->kernel/3rd party sources
+Kernel modules are drivers
+
+Drivers 
+- device manufacturer
+- part of os
+- 3rd party providers, hobbyists
+- alpha exanple
+
+Inspection commands
+lspci pciutils
+PCI interface to add components 
+E for express
+Shows all devices currently connected to the PCI
+
+Commands need root for detailed output
+5 filled
+Fieldsl
+Slot,class,vendor, device, revision
+-t tree output
+-v verbose
+-n device code in output
+-nn description and code
+-s lookup specific device domain:bus:slot.func
+-d lookup vendor device format vendor: device
+-k kernel module associated with
+-mm more descriptive labels
+--x hexdump config space
+PCI lookup.com
+
+
+Lsusb usbutils
+Usb versions 1,2,3.0
+Bus number, device number,id,man name,
+-Lists USB (Universal Serial Bus) information and that are connected to it
+-v verbose
+-s specific bus/device number
+-D specified device file
+
+Lsmod,kmod package
+Information aboutLoaded Linux kernel modules/drivers
+Interface bw hardware and software
+Modules can be loaded and unloaded in running kernel 
+Loaded by udev(device manager)
+Loaded modules at boot time /Etc/modules 
+Or manuall through modprobe
+-reads /proc/modules
+module,size, used by
+
+Modinfo
+Information about a module
+
+Modprobe
+Load and unload a module
+/Lib/modules/kernel version
+Modprobe module name Param=value
+/Etc/modules
+Blacklist.conf
+Read by udev
+-r remove modules
+-l for all available modules
+
+
+Not present in partition but in ram
+Only running during system
+
+
+/Proc running processes,hw resources
+Cpuinfo
+Interrupts
+/Proc/PID/files
+
+/Sys device information, kernel data on hardware
+
+/Dev device information
+Device types attributes
+SCSI,pata
+Portals to device drivers
+Removable devices managed by udev
+Coldplug
+Hot plug
+/Etc/udev/rules.d
+

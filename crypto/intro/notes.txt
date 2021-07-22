@@ -1,0 +1,43 @@
+Introduction
+
+Symmetric
+
+- substitute, Caesar, hill, Monoalpha
+- transposing
+- steganography
+
+Block ciphers(fixed blocks)
+- des
+- 3des
+- AES,idea , Two fish, serpent, 20 algs
+Operations
+- ECBook
+- CBC
+- cipher feedback
+- output feedback
+
+- Stream ciphers(key bits)
+- rc4 and 10 more
+
+Asymmetri 
+- public key crypto
+- RSA
+- DSA,ecdsa
+
+Data integrity
+- hash functions(sha
+- digital signatures
+
+Mutual trust
+- PKI,X.509 certificates
+- user auth, Kerberos
+
+Internet security
+-TLS
+     - SSH
+     - https
+
+System security
+- malwares
+- intruders
+- firewalls

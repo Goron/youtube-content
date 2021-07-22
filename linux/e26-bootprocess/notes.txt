@@ -1,0 +1,99 @@
+1
+intro about previous video and other blah blah
+
+2 & 3
+BIOS
+turning on the power will begin the boot process
+Difference bw bios and uefi
+https://www.howtogeek.com/wp-content/uploads/2017/05/img_5913814ed5e9f.png
+- The BIOS loads when your computer starts up, and the BIOS is responsible for waking up your computer’s hardware components, ensures they’re functioning properly, and then runs the bootloader that boots Windows or whatever other operating system you have installed.
+- It has Settings like your computer’s hardware configuration, system time, and boot order are located here. You can access this screen by pressing a specific key—different on different computers, but often Esc, F2, F10
+- The BIOS goes through a POST, or Power-On Self Test, before booting your operating system. It checks to ensure your hardware configuration is valid and working properly. If something is wrong, you’ll see an error message or hear a cryptic series of beep codes.
+- after the POST finishes—the BIOS looks for a Master Boot Record, or MBR, stored on the boot device and uses it to launch the bootloader
+- CMOS,EEPROM troublshoot
+- BIOS Is Outdated 
+- It can only boot from drives of 2.1 TB or less . BIOS must run in 16-bit processor mode, and only has 1 MB of space to execute in.
+- trouble initializing multiple hardware devices at once, slower boot process
+
+- UEFI uses the GPT 
+https://i.stack.imgur.com/ZVviP.jpg
+- - launching EFI executables rather than running code from a drive’s master boot record
+- UEFI can run in 32-bit or 64-bit mode and has more addressable address space than BIOS, which means your boot process is faster. It also means that UEFI setup screens can be slicker than BIOS settings screens, including graphics and mouse cursor support. However, this isn’t mandatory. Many PCs still ship with text-mode UEFI settings interfaces that look and work like an old BIOS setup screen
+- the UEFI is also a firmware, but it can identify partitions and read many filesystems found in them. The UEFI does not rely on the MBR, taking into account only the settings stored in its non-volatile memory (NVRAM) attached to the motherboard. These definitions indicate the location of the UEFI compatible programs, called EFI applications
+- EFI applications can be bootloaders, operating system selectors, tools for system diagnostics and repair, etc (WINDOWS EFI PARTITION EXAMPLE)
+- partition containing the EFI applications is called the EFI System Partition or just ESP
+- The /boot/efi EFI directory in the ESP partition contains the applications pointed to by the entries saved in the NVRAM.
+-The first step of the Linux boot process really has nothing whatever to do with Linux. This is the hardware portion of the boot process and is the same for any operating system. 
+
+4
+- MBR, The boot sector is really the first stage of the boot loader. There are three boot loaders used by most Linux distributions, GRUB, GRUB2, and LILO. GRUB2 is the newest
+- GRUB2 stands for "GRand Unified Bootloader, version 2"
+- GRUB2 is the program which makes the computer just smart enough to find the operating system kernel and load it into memory
+- compatible with the multiboot
+- choose to boot from among several different kernels for any given Linux distribution
+- /boot/grub/grub.conf
+- the stage notation for the three stages 1,1.5,2
+
+5
+- at the end of POST, BIOS searches the attached disks for a boot record, usually located in the Master Boot Record (MBR), it loads the first one it finds into memory and then starts execution of the boot record. The bootstrap code(GRUB2 stage 1)
+- must fit into the first 512-byte
+- mbr image https://lh3.googleusercontent.com/proxy/itcndp7cSp5kf4wI5uUOPAlJq8T-KQSo785Pb3p7QKRrHQtktD7oKlYOhzNU6yELfcn-kNkofsCBoPeyDYZWnDddAQHAW-orePHoGaELHVs=w1200-h630-p-k-no-nu
+- The 446 Byte file for stage 1 is named boot.img
+- ls -l /boot/grub/i386-pc/boot.img
+- /dev/sda or /dev/hda
+- boot record must be so small, it is also not very smart and does not understand filesystem structures
+-  sole purpose of stage 1 is to locate and load stage 1.5
+- stage 1.5 of GRUB must be located in the space between the boot record itself and the first partition on the drive. After loading GRUB stage 1.5 into RAM, stage 1 turns control over to stage 1.5.
+
+6
+- stage 1.5 of GRUB must be located in the space between the boot record itself and the first partition on the disk drive. This space was left unused historically for technical reasons
+- The first partition on the hard drive begins at sector 63 and with the MBR in sector 0, that leaves 62 512-byte sectors—31,744 bytes—in which to store the core.img file which is stage 1.5 of GRUB
+- ls -lh /boot/grub/i386-pc/core.img
+- it can have enough code to contain a few common filesystem drivers, such as the standard EXT and other Linux filesystems, FAT, and NTFS
+- The function of stage 1.5 is to begin execution with the filesystem drivers necessary to locate the stage 2 files in the /boot filesystem and load the needed drivers.
+
+7
+- files for GRUB stage 2 are located in the /boot/grub
+- GRUB2 does not have an image file like stages 1 and 2.
+- Instead, it consists mostly of runtime kernel modules that are loaded as needed from the /boot/grub2/i386-pc
+- function of GRUB2 stage 2 is to locate and load a Linux kernel into RAM and turn control of the computer over to the kernel
+- The kernel and its associated files are located in the /boot directory. The kernel files are identifiable as they are all named starting with vmlinuz. You can list the contents of the /boot directory to see the currently installed kernels on your system.
+- GRUB provides a pre-boot menu of the installed kernels, including a rescue option and, if configured, a recovery option.
+- Stage 2 of GRUB2 loads the selected kernel into memory and turns control of the computer over to the kernel.
+
+8
+- kernel will self-extract from compressed format(save space). The kernels are located in the /boot directory 
+- After the selected kernel is loaded into memory and begins executing, it must first extract itself from the compressed version of the file before it can perform any useful work
+- later kernel has to mount the root file system 
+- There is a problem .... files are on harddisk how to access without modules/drivers
+- The kernel needs modules as they are not compiled into kernel itself. So, the kernel will load modules for these devices at runtime. These modules are present in “/lib/modules/” directory. This directory is present on the root filesystem itself and the root partition is not mounted yet.
+- So, how can kernel access the modules for mounting the root partition residing on the root partition itself (without mounting it)???????
+- Here initrd comes to rescue. It is archive containing a filesystem used as a temporary root filesystem, Contains the modules required for mounting the root partition. 
+- This initrd resides on the same partition on which kernel image is present. 
+- ls /boot/
+- root partition is mounted next what?
+-  now /sbin/init program commonly referred to as init.(ls -la /sbin/init)
+
+9
+- systemd is the mother of all processes
+- mounting filesystems, and starting and managing system services .. lot more
+- Init is always the first program to be executed and is assigned the process ID or PID of 1. It’s the 
+- init process that spawns various daemons & mounts all partitions that are specified in the /etc/fstab file, intird is removed from RAM
+- Actuall This is the end of the boot process
+- Linux kernel and systemd are running but unable to perform any productive tasks for the end user because nothing else is running.
+- topic of systemd targets,runlevels 
+-  check the current target on your system
+- systemctl get-default
+
+
+10
+- troubleshhot
+- Errors may occur during the boot process, but they may not be so critical to completely halt the operating system
+- All errors result in messages that can be used for future investigations, as they contain valuable information about when and how the error occurred
+- The memory space where the kernel stores its messages, including the boot messages, is called the kernel ring buffer
+- The messages are kept in the kernel ring buffer even when they are not displayed during the initialization process, like when an animation is displayed instead(SERVER EXAMPLE)
+- dmesg displays the current messages in the kernel ring buffer
+- The values in the beginning of the lines are the amount of seconds relative to when kernel load begins
+- systemd, command journalctl -b 
+- messages issued by the operating system are stored in files inside the directory /var/log/
+- then, the files under /var/log/ can be searched for possible reasons causing the interruption of the boot process. Options -D or --directory of command journalctl can be used to read log messages in directories other than /var/log/journal/, which is the default location for systemd log messages. As systemd’s log messages are not stored in raw text, command journalctl is required to read them.

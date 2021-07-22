@@ -1,0 +1,106 @@
+==================================
+Email/SMTP/IMAP Header Injection
+==================================
+
+email functionalities
+	- sign up
+	- password
+	- contact us 
+	- email
+	
+SMTP
+HTB - SMTP
+
+Envelop
+	core commands
+	MAIL FROM:
+	RCPT TO:
+	DATA
+		- Email Headers
+			programmatic,email clients
+				php mail()
+				FROM
+				TO
+		\n
+		- BODY
+			mail content
+ 
+
+
+
+
+
+Client/USer			WebapplicationServer		SMTP server
+ contactus.php ------> mailid
+				mail(to,sub,mess,head) --> 		SMTP commands
+				
+				
+SMTP coommands
+========================================================
+nc example.com 25
+MAIL FROM:<cyber@blackhole.com>
+														OK
+RCPT TO:<tamilbotnet@blackhole.com>						ok
+DATA
+														ok.CRLF
+														
+Content-Type: text/html
+From: cyber2@blackhole.com
+TO: tamilbotnet2#blackhole.com
+
+this is email body.. please sub to cyberblackhole.
+
+
+						
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CODE
+contactus.php
+
+to = cyberblackhole@gmail.com
+subject = testing
+message = testing
+headers = "
+FROM: cyberblackhole\n
+TO:
+
+"
+
+
+mail(to, subject, message, headers);
+
+
+
+linux sendmail - > os command
+
+
+Example DEMO
+
+
+Attacks/RISK
+no-reply@fb.com
+spam
+phishing
+
+
+Mitigation
+whitelisting,
+email validation
+regex
